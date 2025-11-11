@@ -185,7 +185,7 @@ int main() {
     return 0;
 }
 ```
-CALL CENTER CODE
+Student Management System CODE
 DLL CODE:
 
 ```
@@ -614,7 +614,125 @@ int main() {
 ```
 HASHING function 2, using LINEAR PROBING
 ```
+#include <iostream>
+using namespace std;
 
+#define SIZE 10   // Fixed size of hash table
+#define EMPTY -1  // Empty cell marker
+#define DELETED -2 // Deleted cell marker
+
+int hashTable[SIZE];
+
+// Hash function (Division method)
+int hashFunc(int key) {
+    return key % SIZE;
+}
+
+// Insert a key
+void insertKey(int key) {
+    int index = hashFunc(key);
+    int startIndex = index;
+
+    while (hashTable[index] != EMPTY && hashTable[index] != DELETED) {
+        index = (index + 1) % SIZE;
+        if (index == startIndex) {
+            cout << "Hash Table is full!\n";
+            return;
+        }
+    }
+    hashTable[index] = key;
+    cout << "Inserted " << key << " at index " << index << endl;
+}
+
+// Search a key
+void searchKey(int key) {
+    int index = hashFunc(key);
+    int startIndex = index;
+
+    while (hashTable[index] != EMPTY) {
+        if (hashTable[index] == key) {
+            cout << "Key " << key << " found at index " << index << endl;
+            return;
+        }
+        index = (index + 1) % SIZE;
+        if (index == startIndex) break;
+    }
+    cout << "Key " << key << " not found.\n";
+}
+
+// Delete a key
+void deleteKey(int key) {
+    int index = hashFunc(key);
+    int startIndex = index;
+
+    while (hashTable[index] != EMPTY) {
+        if (hashTable[index] == key) {
+            hashTable[index] = DELETED;
+            cout << "Key " << key << " deleted from index " << index << endl;
+            return;
+        }
+        index = (index + 1) % SIZE;
+        if (index == startIndex) break;
+    }
+    cout << "Key " << key << " not found.\n";
+}
+
+// Display the hash table
+void displayTable() {
+    cout << "\nHash Table:\n";
+    for (int i = 0; i < SIZE; i++) {
+        cout << i << " --> ";
+        if (hashTable[i] == EMPTY) cout << "EMPTY";
+        else if (hashTable[i] == DELETED) cout << "DELETED";
+        else cout << hashTable[i];
+        cout << endl;
+    }
+}
+
+// Main function
+int main() {
+    for (int i = 0; i < SIZE; i++) hashTable[i] = EMPTY;
+
+    int choice, key;
+
+    while (true) {
+        cout << "\n--- Hash Table Menu ---\n";
+        cout << "1. Insert\n2. Search\n3. Delete\n4. Display\n5. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter key to insert: ";
+                cin >> key;
+                insertKey(key);
+                break;
+
+            case 2:
+                cout << "Enter key to search: ";
+                cin >> key;
+                searchKey(key);
+                break;
+
+            case 3:
+                cout << "Enter key to delete: ";
+                cin >> key;
+                deleteKey(key);
+                break;
+
+            case 4:
+                displayTable();
+                break;
+
+            case 5:
+                cout << "Exiting...";
+                return 0;
+
+            default:
+                cout << "Invalid choice!";
+        }
+    }
+}
 
 ```
 
