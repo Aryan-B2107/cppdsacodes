@@ -1,12 +1,13 @@
 cppdsacodes
 ______________________________________________________________________________________________________
 SEARCHING CODES : 
-
+```
 #include <iostream>
 #include <algorithm>
 using namespace std;
 
 // Linear Search
+
 int linearSearch(int arr[], int n, int target) {
     for (int i = 0; i < n; i++) {
         if (arr[i] == target) {
@@ -66,9 +67,10 @@ int main() {
     
     return 0;
 }
-
+```
 ______________________________________________________________________________________________________
 HashTABLE Implementation using Chaining as resolution of size 10:
+```
 #include <iostream>
 using namespace std;
 
@@ -182,11 +184,11 @@ int main() {
 
     return 0;
 }
-
+```
 
 DLL CODE:
 
-
+```
 #include <iostream>
 #include <string>
 using namespace std;
@@ -333,8 +335,10 @@ int main() {
     dl.sortAscending(true);
     dl.display();
 }
+```
 __________________________________________________________________________________________________________
 CALL CENTER QUEUE:
+```
 #include <iostream>
 using namespace std;
 
@@ -432,8 +436,10 @@ int main() {
         cout << "Queue is not empty\n";
     }
 }
+```
 ___________________________________________________________________________________________________
 PIZZA SHOP MST:
+```
 #include <iostream>
 #include <climits>
 using namespace std;
@@ -509,8 +515,11 @@ int main() {
     
     return 0;
 }
+```
 ____________________________________________________________________________________________________________________
 Binary SEARCH TREE :
+
+```
 #include <iostream>
 using namespace std;
 
@@ -602,3 +611,4 @@ int main() {
 
     return 0;
 }
+```
