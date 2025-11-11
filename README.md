@@ -520,96 +520,198 @@ ________________________________________________________________________________
 Binary SEARCH TREE :
 
 ```
+/* Binary search tree is just a soretd tree which obeys 
+   one important rule:
+
+   Left child < current node
+   Right chiled > current node
+
+*/
+
 #include <iostream>
 using namespace std;
 
-struct Node {
+struct Node{
+
     int data;
-    Node *left, *right;
+    Node* left;
+    Node* right;
+
+    //constructor:
+    Node(int value) {
+        data = value;
+        left = nullptr;
+        right = nullptr;
+    }
 };
 
-// Create new node
-Node* newNode(int value) {
-    Node* node = new Node();
-    node->data = value;
-    node->left = node->right = NULL;
-    return node;
-}
+class BST {
 
-// Insert
-Node* insert(Node* root, int value) {
-    if (root == NULL) return newNode(value);
-    if (value < root->data)
-        root->left = insert(root->left, value);
-    else if (value > root->data)
-        root->right = insert(root->right, value);
-    return root;
-}
-
-// Search
-bool search(Node* root, int key) {
-    if (root == NULL) return false;
-    if (root->data == key) return true;
-    if (key < root->data)
-        return search(root->left, key);
-    else
-        return search(root->right, key);
-}
-
-// Inorder Display
-void inorder(Node* root) {
-    if (root != NULL) {
-        inorder(root->left);
-        cout << root->data << " ";
-        inorder(root->right);
+public:
+    Node* root;
+    
+    //Constructor for BST:
+    BST() {
+        root = nullptr;
     }
-}
 
-// Find minimum node
-Node* minValue(Node* root) {
-    while (root && root->left != NULL)
-        root = root->left;
-    return root;
-}
+    //insert function is basically a recursive function, 
+    //so data type ot use is Node*
 
-// Delete
-Node* deleteNode(Node* root, int key) {
-    if (root == NULL) return root;
-    if (key < root->data)
-        root->left = deleteNode(root->left, key);
-    else if (key > root->data)
-        root->right = deleteNode(root->right, key);
-    else {
-        if (root->left == NULL) return root->right;
-        else if (root->right == NULL) return root->left;
-        Node* temp = minValue(root->right);
-        root->data = temp->data;
-        root->right = deleteNode(root->right, temp->data);
+    //node is the elements themselves, value is the value to insert
+    
+    //INSERTION OPERATION
+    Node* insert_in_bst(Node* node, int value) {
+        //if tree empty, create node, return that node
+
+        if (node == nullptr) {
+            Node* newNode = new Node(value);
+            return newNode;
+        }
+
+        if (value < node->data) {
+            node->left = insert_in_bst(node->left, value);
+        } else if (value > node->data) {
+            node->right = insert_in_bst(node->right, value);
+        }
+
+        return node;
+
     }
-    return root;
-}
 
-// Main
+    // SEARCHING OPERATION
+
+    //this is mostly similar to insertion
+
+    Node* searching_in_bst(Node* node, int key) {
+        if (node == nullptr) {
+            return nullptr;
+        }
+
+        if (key == node->data) {
+            return node;
+        }
+
+        if (key < node->data) {
+            return searching_in_bst(node->left, key);
+        }else {
+            return searching_in_bst(node->right, key);
+        }
+
+    }
+
+    //FIND MINIMUM NODE -> basically the left most node
+    //initially node = nullptr
+    Node* minvalue(Node* node) {
+        Node* current = node;
+        
+        while (current->left != nullptr) {
+            current = current->left;
+        }
+        return current;
+
+    }
+
+    //DELETION CODE:
+    //FIRST PART IS  LITERALLY INSERTION node->left = deleteNode(node->left, key)
+
+    Node* deleteNode(Node* node, int key) {
+
+        if (node == nullptr) {
+            return nullptr;
+        }
+
+        // obviously grater, or smaller than comparison must 
+        //be done with node->data and not node->left which are pointers
+        if(key < node->data) {
+            node->left = deleteNode(node->left, key);
+        }else if (key > node->data) {
+            node->right = deleteNode(node->right, key);
+        }else {
+
+
+            if(node->left == nullptr && node->right == nullptr) {
+                delete node;
+                return nullptr;
+            }
+
+            if (node->left == nullptr) {
+                Node* temp = node->right;
+                delete node;
+                return temp;
+            }
+
+            if (node->right == nullptr) {
+                Node* temp = node->left;
+                delete node;
+                return temp;
+            }
+            
+            Node* temp = minvalue(node->right);
+            node->data = temp->data;
+            node->right = deleteNode(node->right, temp->data);
+
+
+        }
+
+        return node;
+    }
+
+    void inorder(Node* node) {
+        if (node == nullptr) {
+            return;
+        }
+
+        inorder(node->left);
+        cout<<node->data<<" ";
+        inorder(node->right);
+    }
+
+};
+
 int main() {
-    Node* root = NULL;
-    root = insert(root, 50);
-    insert(root, 30);
-    insert(root, 70);
-    insert(root, 20);
-    insert(root, 40);
-    insert(root, 60);
-    insert(root, 80);
+    BST tree;
+    int choice;
+    int value;
 
-    cout << "Inorder Traversal: ";
-    inorder(root);
+    while (true) {
+        cout << "\n1. Insert\n2. Search\n3. Delete\n4. Display (Inorder)\n5. Exit\n";
+        cout << "Enter choice: ";
+        cin >> choice;
 
-    cout << "\nSearch 40: " << (search(root, 40) ? "Found" : "Not Found");
+        if (choice == 1) {
+            cout << "Enter value to insert: ";
+            cin >> value;
+            tree.root = tree.insert_in_bst(tree.root, value);  // Corrected insert function
+        }
+        else if (choice == 2) {
+            cout << "Enter value to search: ";
+            cin >> value;
+            Node* found = tree.searching_in_bst(tree.root, value);  // Corrected search function
 
-    root = deleteNode(root, 20);
-    cout << "\nAfter deleting 20: ";
-    inorder(root);
+            if (found != nullptr) {
+                cout << "Value found.\n";
+            } else {
+                cout << "Value not found.\n";
+            }
+        }
+        else if (choice == 3) {
+            cout << "Enter value to delete: ";
+            cin >> value;
+            tree.root = tree.deleteNode(tree.root, value);
+        }
+        else if (choice == 4) {
+            cout << "BST (Inorder): ";
+            tree.inorder(tree.root);
+            cout << "\n";
+        }
+        else if (choice == 5) {
+            break;
+        }
+    }
 
-    return 0;
+    return 0;
+}
 }
 ```
 HASHING function 2, using LINEAR PROBING
