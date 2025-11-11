@@ -185,7 +185,7 @@ int main() {
     return 0;
 }
 ```
-
+CALL CENTER CODE
 DLL CODE:
 
 ```
@@ -609,6 +609,185 @@ int main() {
     cout << "\nAfter deleting 20: ";
     inorder(root);
 
+    return 0;
+}
+```
+HASHING function 2, using LINEAR PROBING
+```
+
+
+```
+
+SORTING CODE:
+```
+ARYAN:
+
+#include <iostream>
+using namespace std;
+
+void selection_sort(double arr[], int n) {
+    for (int i = 0; i < n; i++) {
+        int min_idx = i;
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j] < arr[min_idx]) {
+                min_idx = j;
+            }
+        }
+        double temp = arr[i];
+        arr[i] = arr[min_idx];
+        arr[min_idx] = temp;
+    }
+}
+
+void bubble_sort(double arr[], int n) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                double temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    double salaries[] = {
+        45000.50, 32000.00, 78000.75, 51000.20, 29000.00,
+        66000.40, 88000.00, 73000.55, 91000.90, 54000.60
+    };
+
+    int n = sizeof(salaries) / sizeof(salaries[0]);
+
+    double s1[10];
+    double s2[10];
+
+    for (int i = 0; i < n; i++) {
+        s1[i] = salaries[i];
+        s2[i] = salaries[i];
+    }
+
+    bubble_sort(s1, n);
+    selection_sort(s2, n);
+
+    cout << "Bubble Sorted: ";
+    for (int i = 0; i < n; i++) cout << s1[i] << " ";
+    cout << "\n";
+
+    cout << "Selection Sorted: ";
+    for (int i = 0; i < n; i++) cout << s2[i] << " ";
+    cout << "\n";
+
+    cout << "Top 5: ";
+    for (int i = n - 5; i < n; i++) cout << s1[i] << " ";
+    cout << "\n";
+
+    return 0;
+}
+----------------------------------------------------------------------
+HIMANSHU:
+
+#include <iostream>
+using namespace std;
+
+// Function to display array
+void displaySalaries(float salaries[], int n) {
+    for (int i = 0; i < n; i++) {
+        cout << salaries[i] << " ";
+    }
+    cout << endl;
+}
+
+// Selection Sort Algorithm
+void selectionSort(float salaries[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        int minIndex = i;
+        
+        // Find minimum element in unsorted part
+        for (int j = i + 1; j < n; j++) {
+            if (salaries[j] < salaries[minIndex]) {
+                minIndex = j;
+            }
+        }
+        
+        // Swap minimum element with first element
+        if (minIndex != i) {
+            float temp = salaries[i];
+            salaries[i] = salaries[minIndex];
+            salaries[minIndex] = temp;
+        }
+    }
+}
+
+// Bubble Sort Algorithm
+void bubbleSort(float salaries[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        // Flag to optimize (stop if no swaps occur)
+        bool swapped = false;
+        
+        // Compare adjacent elements
+        for (int j = 0; j < n - i - 1; j++) {
+            if (salaries[j] > salaries[j + 1]) {
+                // Swap if they are in wrong order
+                float temp = salaries[j];
+                salaries[j] = salaries[j + 1];
+                salaries[j + 1] = temp;
+                swapped = true;
+            }
+        }
+        
+        // If no swaps occurred, array is sorted
+        if (!swapped) {
+            break;
+        }
+    }
+}
+
+// Function to display top 5 highest salaries
+void displayTop5(float salaries[], int n) {
+    cout << "\nTop 5 Highest Salaries:" << endl;
+    
+    // Start from end (highest) and go backwards
+    int count = (n < 5) ? n : 5;  // Handle if less than 5 employees
+    
+    for (int i = n - 1; i >= n - count; i--) {
+        cout << i - (n - count) + 1 << ". $" << salaries[i] << endl;
+    }
+}
+-
+int main() {
+    int n;
+    
+    cout << "Enter number of employees: ";
+    cin >> n;
+    
+    float salaries1[n], salaries2[n];
+    
+    // Input salaries
+    cout << "Enter " << n << " employee salaries:" << endl;
+    for (int i = 0; i < n; i++) {
+        cout << "Salary " << i + 1 << ": ";
+        cin >> salaries1[i];
+        salaries2[i] = salaries1[i];  // Copy for second algorithm
+    }
+    
+    cout << "\n--- Original Salaries ---" << endl;
+    displaySalaries(salaries1, n);
+    
+    // Selection Sort
+    cout << "\n--- Using Selection Sort ---" << endl;
+    selectionSort(salaries1, n);
+    cout << "Sorted Salaries: ";
+    displaySalaries(salaries1, n);
+    displayTop5(salaries1, n);
+    
+    // Bubble Sort
+    cout << "\n--- Using Bubble Sort ---" << endl;
+    bubbleSort(salaries2, n);
+    cout << "Sorted Salaries: ";
+    displaySalaries(salaries2, n);
+    displayTop5(salaries2, n);
+    
     return 0;
 }
 ```
